@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyMUWwYO0GcAcJlHey6aS0Gg",
+      "authorship_tag": "ABX9TyMTMB13CgLtQ83bRyI2y8U2",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -28,13 +28,13 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 14,
+      "execution_count": 15,
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
         "id": "E9eUfBhCe276",
-        "outputId": "8593d1c4-e0a5-4b9c-ac18-2066c4ef25dd"
+        "outputId": "676e8db7-61f4-41aa-bfbe-422bb2b97132"
       },
       "outputs": [
         {
@@ -47,7 +47,8 @@
             "\n",
             "Running full test suite...\n",
             "\n",
-            "✅ test_results.csv generated successfully!\n"
+            "✅ test_results.csv generated successfully!\n",
+            "['.config', 'test_results.csv', 'sample_data']\n"
           ]
         }
       ],
@@ -229,7 +230,9 @@
         "    print(\"\\nRunning full test suite...\\n\")\n",
         "\n",
         "    # Generate CSV\n",
-        "    run_tests()"
+        "    run_tests()\n",
+        "\n",
+        "print(os.listdir(\"/content\"))"
       ]
     },
     {
