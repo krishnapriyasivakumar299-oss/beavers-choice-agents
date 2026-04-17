@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyNXwxn0VKECVQhEqPsekbDv",
+      "authorship_tag": "ABX9TyOliL5uAohLyY0+WanRFHh9",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -28,13 +28,13 @@
     },
     {
       "cell_type": "code",
-      "execution_count": 10,
+      "execution_count": 13,
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
         },
         "id": "E9eUfBhCe276",
-        "outputId": "edbb6b24-aa11-4499-d202-a254e2421e5e"
+        "outputId": "7880c542-7ca0-4af7-804c-a6045d0ee8bd"
       },
       "outputs": [
         {
@@ -137,8 +137,51 @@
         "# ---------------------------\n",
         "\n",
         "result = handle_request(\"A4 paper 500 units\")\n",
-        "print(result)"
+        "print(result)\n",
+        "\n",
+        "def run_tests():\n",
+        "    results = []\n",
+        "\n",
+        "    with open(\"quote_requests_sample.csv\") as f:\n",
+        "        reader = csv.DictReader(f)\n",
+        "\n",
+        "        for row in reader:\n",
+        "            request = str(row)\n",
+        "            response = handle_request(request)\n",
+        "\n",
+        "            results.append([\n",
+        "                request,\n",
+        "                response[\"inventory\"],\n",
+        "                response[\"quote\"],\n",
+        "                response[\"sale\"],\n",
+        "                response[\"finance\"]\n",
+        "            ])\n",
+        "\n",
+        "    # Save to CSV\n",
+        "    with open(\"test_results.csv\", \"w\", newline=\"\") as f:\n",
+        "        writer = csv.writer(f)\n",
+        "\n",
+        "        writer.writerow([\n",
+        "            \"request\",\n",
+        "            \"inventory\",\n",
+        "            \"quote\",\n",
+        "            \"sale\",\n",
+        "            \"finance\"\n",
+        "        ])\n",
+        "\n",
+        "        writer.writerows(results)\n",
+        "\n",
+        "    print(\"✅ test_results.csv generated!\")"
       ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# New Section"
+      ],
+      "metadata": {
+        "id": "L7mGByjsrTed"
+      }
     }
   ]
 }
