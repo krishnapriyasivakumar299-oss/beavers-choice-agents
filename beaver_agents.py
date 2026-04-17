@@ -185,3 +185,8 @@
     }
   ]
 }
+if __name__ == "__main__":
+    print("Running test...")
+
+    result = handle_request("A4 paper 500 units")
+    print(result)
