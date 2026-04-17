@@ -1,0 +1,6 @@
+request,inventory,quote,sale,finance
+A4 paper 50 units,Stock available: 200,Price: ₹500 (discount 0%),Transaction completed: 50 units for ₹500,Updated balance: ₹51000
+A4 paper 100 units,Stock available: 200,Price: ₹1000 (discount 0%),Transaction completed: 100 units for ₹1000,Updated balance: ₹51000
+A4 paper 500 units,Stock available: 200,Price: ₹4500.0 (discount 10.0%),Order failed: insufficient stock (only 200 available),No change in balance: ₹50000
+A3 paper 200 units,Stock available: 300,Price: ₹1800.0 (discount 10.0%),Transaction completed: 200 units for ₹2000,Updated balance: ₹51000
+Glossy paper 300 units,Stock available: 150,Price: ₹2700.0 (discount 10.0%),Order failed: insufficient stock (only 150 available),No change in balance: ₹50000
