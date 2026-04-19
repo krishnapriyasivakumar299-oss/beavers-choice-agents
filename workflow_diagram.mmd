@@ -1,0 +1,29 @@
+%% workflow_diagram.mmd
+%% Multi-Agent System Workflow for Beaver's Choice Paper Company
+
+flowchart TD
+    Customer[Customer Inquiry]
+    Orchestrator[Orchestrator Agent]
+
+    Inventory[Inventory Agent]
+    Quote[Quote Agent]
+    Sales[Sales Agent]
+    Finance[Finance Agent]
+
+    DB[(SQLite Database)]
+
+    Customer --> Orchestrator
+    Orchestrator --> Inventory
+    Orchestrator --> Quote
+    Orchestrator --> Sales
+    Orchestrator --> Finance
+
+    Inventory -->|get_all_inventory, get_stock_level, get_supplier_delivery_date| DB
+    Quote -->|search_quote_history| DB
+    Sales -->|create_transaction| DB
+    Finance -->|get_cash_balance, generate_financial_report| DB
+
+    DB --> Inventory
+    DB --> Quote
+    DB --> Sales
+    DB --> Finance
