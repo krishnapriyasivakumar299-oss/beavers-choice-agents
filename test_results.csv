@@ -1,6 +1,20 @@
-request,inventory,quote,sale,finance
-A4 paper 50 units,Stock available: 200,Price: ₹500 (discount 0%),Transaction completed: 50 units for ₹500,Updated balance: ₹51000
-A4 paper 100 units,Stock available: 200,Price: ₹1000 (discount 0%),Transaction completed: 100 units for ₹1000,Updated balance: ₹51000
-A4 paper 500 units,Stock available: 200,Price: ₹4500.0 (discount 10.0%),Order failed: insufficient stock (only 200 available),No change in balance: ₹50000
-A3 paper 200 units,Stock available: 300,Price: ₹1800.0 (discount 10.0%),Transaction completed: 200 units for ₹2000,Updated balance: ₹51000
-Glossy paper 300 units,Stock available: 150,Price: ₹2700.0 (discount 10.0%),Order failed: insufficient stock (only 150 available),No change in balance: ₹50000
+Request,Outcome,Reason,Cash Balance Change
+"{'request_id': '1', 'type': 'quote', 'customer_id': '101', 'item_id': '5', 'quantity': '200', 'price': '10', 'order': ''}",1800.0,Bulk discount applied,N/A
+"{'request_id': '2', 'type': 'quote', 'customer_id': '102', 'item_id': '6', 'quantity': '500', 'price': '10', 'order': ''}",4500.0,Bulk discount applied,N/A
+"{'request_id': '3', 'type': 'quote', 'customer_id': '103', 'item_id': '7', 'quantity': '10000', 'price': '10', 'order': ''}",90000.0,Bulk discount applied,N/A
+"{'request_id': '4', 'type': 'inventory', 'customer_id': '', 'item_id': '2', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
+"{'request_id': '5', 'type': 'inventory', 'customer_id': '', 'item_id': '4', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
+"{'request_id': '6', 'type': 'inventory', 'customer_id': '', 'item_id': '6', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
+"{'request_id': '7', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':101"", None: [""'item_id':5"", ""'quantity':200"", ""'price':2000}""]}",N/A,Invalid order format,N/A
+"{'request_id': '8', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':102"", None: [""'item_id':6"", ""'quantity':500"", ""'price':5000}""]}",N/A,Invalid order format,N/A
+"{'request_id': '9', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':103"", None: [""'item_id':7"", ""'quantity':10000"", ""'price':100000}""]}",N/A,Invalid order format,N/A
+"{'request_id': '10', 'type': 'finance', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ''}",10000.0,Demo financial report,0
+"{'request_id': '11', 'type': 'finance', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ''}",10000.0,Demo financial report,0
+"{'request_id': '12', 'type': 'finance', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ''}",10000.0,Demo financial report,0
+"{'request_id': '13', 'type': 'quote', 'customer_id': '104', 'item_id': '8', 'quantity': '500', 'price': '10', 'order': ''}",4500.0,Bulk discount applied,N/A
+"{'request_id': '14', 'type': 'quote', 'customer_id': '105', 'item_id': '9', 'quantity': '150', 'price': '10', 'order': ''}",1350.0,Bulk discount applied,N/A
+"{'request_id': '15', 'type': 'inventory', 'customer_id': '', 'item_id': '10', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
+"{'request_id': '16', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':104"", None: [""'item_id':8"", ""'quantity':500"", ""'price':5000}""]}",N/A,Invalid order format,N/A
+"{'request_id': '17', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':105"", None: [""'item_id':9"", ""'quantity':150"", ""'price':1500}""]}",N/A,Invalid order format,N/A
+"{'request_id': '18', 'type': 'quote', 'customer_id': '106', 'item_id': '11', 'quantity': '120', 'price': '10', 'order': ''}",1080.0,Bulk discount applied,N/A
+"{'request_id': '19', 'type': 'inventory', 'customer_id': '', 'item_id': '12', 'quantity': '', 'price': '', 'order': ' '}",Error,get_supplier_delivery_date() missing 1 required positional argument: 'quantity',N/A

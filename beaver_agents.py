@@ -1,248 +1,164 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyMTMB13CgLtQ83bRyI2y8U2",
-      "include_colab_link": true
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "markdown",
-      "metadata": {
-        "id": "view-in-github",
-        "colab_type": "text"
-      },
-      "source": [
-        "<a href=\"https://colab.research.google.com/github/krishnapriyasivakumar299-oss/beavers-choice-agents/blob/main/beaver_agents.py\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
-      ]
-    },
-    {
-      "cell_type": "code",
-      "execution_count": 15,
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "E9eUfBhCe276",
-        "outputId": "676e8db7-61f4-41aa-bfbe-422bb2b97132"
-      },
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "Running system...\n",
-            "\n",
-            "{'request': 'A4 paper 500 units', 'inventory': 'Stock available: 200', 'quote': 'Price: ₹4500.0 (discount 10.0%)', 'sale': 'Order failed: insufficient stock (only 200 available)', 'finance': 'No change in balance: ₹50000'}\n",
-            "\n",
-            "Running full test suite...\n",
-            "\n",
-            "✅ test_results.csv generated successfully!\n",
-            "['.config', 'test_results.csv', 'sample_data']\n"
-          ]
-        }
-      ],
-      "source": [
-        "import csv\n",
-        "\n",
-        "# ---------------------------\n",
-        "# MOCK DATABASE FUNCTIONS\n",
-        "# (Replace with project_starter if available)\n",
-        "# ---------------------------\n",
-        "\n",
-        "def get_stock_level(product):\n",
-        "    inventory = {\n",
-        "        \"A4 paper\": 200,\n",
-        "        \"A3 paper\": 300,\n",
-        "        \"Glossy paper\": 150\n",
-        "    }\n",
-        "    for key in inventory:\n",
-        "        if key.lower() in product.lower():\n",
-        "            return inventory[key]\n",
-        "    return 100\n",
-        "\n",
-        "\n",
-        "def search_quote_history(product):\n",
-        "    return 10  # price per unit\n",
-        "\n",
-        "\n",
-        "def create_transaction(product, quantity, price):\n",
-        "    return f\"Transaction completed: {quantity} units for ₹{price}\"\n",
-        "\n",
-        "\n",
-        "def get_cash_balance():\n",
-        "    return 50000\n",
-        "\n",
-        "\n",
-        "# ---------------------------\n",
-        "# HELPER FUNCTION\n",
-        "# ---------------------------\n",
-        "\n",
-        "def extract_quantity(request):\n",
-        "    words = request.split()\n",
-        "    for word in words:\n",
-        "        if word.isdigit():\n",
-        "            return int(word)\n",
-        "    return 0\n",
-        "\n",
-        "\n",
-        "# ---------------------------\n",
-        "# AGENTS\n",
-        "# ---------------------------\n",
-        "\n",
-        "class InventoryAgent:\n",
-        "    def run(self, request):\n",
-        "        stock = get_stock_level(request)\n",
-        "        return stock\n",
-        "\n",
-        "\n",
-        "class QuoteAgent:\n",
-        "    def run(self, request):\n",
-        "        quantity = extract_quantity(request)\n",
-        "        price_per_unit = search_quote_history(request)\n",
-        "\n",
-        "        if quantity > 100:\n",
-        "            discount = 0.1\n",
-        "        else:\n",
-        "            discount = 0\n",
-        "\n",
-        "        total = quantity * price_per_unit * (1 - discount)\n",
-        "\n",
-        "        return f\"Price: ₹{total} (discount {discount*100}%)\"\n",
-        "\n",
-        "\n",
-        "class SalesAgent:\n",
-        "    def run(self, request, stock):\n",
-        "        quantity = extract_quantity(request)\n",
-        "\n",
-        "        if quantity > stock:\n",
-        "            return f\"Order failed: insufficient stock (only {stock} available)\"\n",
-        "\n",
-        "        price_per_unit = search_quote_history(request)\n",
-        "        total_price = quantity * price_per_unit\n",
-        "\n",
-        "        return create_transaction(request, quantity, total_price)\n",
-        "\n",
-        "\n",
-        "class FinanceAgent:\n",
-        "    def run(self, success=True):\n",
-        "        if success:\n",
-        "            return f\"Updated balance: ₹{get_cash_balance() + 1000}\"\n",
-        "        return f\"No change in balance: ₹{get_cash_balance()}\"\n",
-        "\n",
-        "\n",
-        "# ---------------------------\n",
-        "# ORCHESTRATOR\n",
-        "# ---------------------------\n",
-        "\n",
-        "def handle_request(request):\n",
-        "    quantity = extract_quantity(request)\n",
-        "\n",
-        "    inventory_agent = InventoryAgent()\n",
-        "    quote_agent = QuoteAgent()\n",
-        "    sales_agent = SalesAgent()\n",
-        "    finance_agent = FinanceAgent()\n",
-        "\n",
-        "    stock = inventory_agent.run(request)\n",
-        "\n",
-        "    inventory = f\"Stock available: {stock}\"\n",
-        "    quote = quote_agent.run(request)\n",
-        "    sale = sales_agent.run(request, stock)\n",
-        "\n",
-        "    if \"failed\" in sale.lower():\n",
-        "        finance = finance_agent.run(success=False)\n",
-        "    else:\n",
-        "        finance = finance_agent.run(success=True)\n",
-        "\n",
-        "    return {\n",
-        "        \"request\": request,\n",
-        "        \"inventory\": inventory,\n",
-        "        \"quote\": quote,\n",
-        "        \"sale\": sale,\n",
-        "        \"finance\": finance\n",
-        "    }\n",
-        "\n",
-        "\n",
-        "# ---------------------------\n",
-        "# TESTING FUNCTION\n",
-        "# ---------------------------\n",
-        "\n",
-        "def run_tests():\n",
-        "    test_requests = [\n",
-        "        \"A4 paper 50 units\",\n",
-        "        \"A4 paper 100 units\",\n",
-        "        \"A4 paper 500 units\",\n",
-        "        \"A3 paper 200 units\",\n",
-        "        \"Glossy paper 300 units\"\n",
-        "    ]\n",
-        "\n",
-        "    results = []\n",
-        "\n",
-        "    for request in test_requests:\n",
-        "        response = handle_request(request)\n",
-        "\n",
-        "        results.append([\n",
-        "            response[\"request\"],\n",
-        "            response[\"inventory\"],\n",
-        "            response[\"quote\"],\n",
-        "            response[\"sale\"],\n",
-        "            response[\"finance\"]\n",
-        "        ])\n",
-        "\n",
-        "    # Save CSV\n",
-        "    with open(\"test_results.csv\", \"w\", newline=\"\") as f:\n",
-        "        writer = csv.writer(f)\n",
-        "\n",
-        "        writer.writerow([\n",
-        "            \"request\",\n",
-        "            \"inventory\",\n",
-        "            \"quote\",\n",
-        "            \"sale\",\n",
-        "            \"finance\"\n",
-        "        ])\n",
-        "\n",
-        "        writer.writerows(results)\n",
-        "\n",
-        "    print(\"✅ test_results.csv generated successfully!\")\n",
-        "\n",
-        "\n",
-        "# ---------------------------\n",
-        "# MAIN\n",
-        "# ---------------------------\n",
-        "\n",
-        "if __name__ == \"__main__\":\n",
-        "    print(\"Running system...\\n\")\n",
-        "\n",
-        "    # Single test\n",
-        "    result = handle_request(\"A4 paper 500 units\")\n",
-        "    print(result)\n",
-        "\n",
-        "    print(\"\\nRunning full test suite...\\n\")\n",
-        "\n",
-        "    # Generate CSV\n",
-        "    run_tests()\n",
-        "\n",
-        "print(os.listdir(\"/content\"))"
-      ]
-    },
-    {
-      "cell_type": "markdown",
-      "source": [
-        "# New Section"
-      ],
-      "metadata": {
-        "id": "L7mGByjsrTed"
-      }
-    }
-  ]
-}
+# beaver_agents.py
+import ast
+from smolagents import tool
+from project_starter import (
+    create_transaction,
+    get_all_inventory,
+    get_stock_level,
+    get_supplier_delivery_date
+)
+
+# ------------------ TOOLS ------------------
+
+@tool
+def tool_create_transaction(order: dict) -> dict:
+    """
+    Finalize a sales transaction and update the database.
+
+    Args:
+        order (dict): A dictionary containing order details such as
+                      customer_id, item_id, quantity, and price.
+
+    Returns:
+        dict: Confirmation of transaction and updated database state.
+    """
+    return create_transaction(order)
+
+@tool
+def tool_get_all_inventory() -> list:
+    """Return the full inventory list."""
+    return get_all_inventory()
+
+@tool
+def tool_get_stock_level(item_id: int, as_of_date: str = "today") -> int:
+    """
+    Check stock level for a specific item.
+
+    Args:
+        item_id (int): The unique identifier of the item to check.
+        as_of_date (str): The date to check stock levels for (default: "today").
+
+    Returns:
+        int: Quantity of the item in stock.
+    """
+    df = get_stock_level(item_id, as_of_date)
+    if df is None or df.empty:
+        return 0
+    value = df["current_stock"].iloc[0]
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return 0
+
+@tool
+def tool_get_supplier_delivery_date(item_id: int) -> str:
+    """
+    Estimate supplier delivery timeline for an item.
+
+    Args:
+        item_id (int): The unique identifier of the item.
+
+    Returns:
+        str: Expected delivery date from supplier.
+    """
+    return get_supplier_delivery_date(item_id)
+
+# ---- Stubbed Finance Tools ----
+
+@tool
+def tool_get_cash_balance(as_of_date: str = "today") -> float:
+    """
+    Retrieve the current cash balance (stubbed).
+
+    Args:
+        as_of_date (str): The date to check cash balance for (default: "today").
+
+    Returns:
+        float: Fixed demo cash balance.
+    """
+    return 10000.0
+
+@tool
+def tool_generate_financial_report(as_of_date: str = "today") -> dict:
+    """
+    Generate a financial summary report (stubbed).
+
+    Args:
+        as_of_date (str): The date to generate the report for (default: "today").
+
+    Returns:
+        dict: Stubbed financial report.
+    """
+    return {"cash_change": 0, "summary": "Demo financial report"}
+
+@tool
+def tool_search_quote_history(customer_id: int) -> list:
+    """
+    Retrieve past quotes for a customer (stubbed).
+
+    Args:
+        customer_id (int): The unique identifier of the customer.
+
+    Returns:
+        list: List of past quotes for the customer.
+    """
+    return [
+        {"customer_id": customer_id, "quote": 100, "reason": "Standard pricing"},
+        {"customer_id": customer_id, "quote": 900, "reason": "Bulk discount applied"}
+    ]
+
+# ------------------ AGENTS ------------------
+
+class InventoryAgent:
+    def run(self, item_id: int) -> dict:
+        stock = tool_get_stock_level(item_id)
+        if stock < 10:
+            return {"status": "low", "delivery": tool_get_supplier_delivery_date(item_id)}
+        return {"status": "ok", "stock": stock}
+
+class QuoteAgent:
+    def run(self, customer_id: int, item_id: int, quantity: int) -> dict:
+        history = tool_search_quote_history(customer_id)
+        base_price = 10
+        if quantity >= 100:
+            price = base_price * quantity * 0.9
+            reason = "Bulk discount applied"
+        else:
+            price = base_price * quantity
+            reason = "Standard pricing"
+        return {"quote": price, "reason": reason, "history": history}
+
+class SalesAgent:
+    def run(self, order: dict) -> dict:
+        return tool_create_transaction(order)
+
+class FinanceAgent:
+    def run(self) -> dict:
+        balance = tool_get_cash_balance()
+        report = tool_generate_financial_report()
+        return {"balance": balance, "report": report}
+
+# ------------------ ORCHESTRATOR ------------------
+
+class OrchestratorAgent:
+    def handle_request(self, request: dict) -> dict:
+        req_type = request.get("type")
+        if req_type == "inventory":
+            return InventoryAgent().run(int(request["item_id"]))
+        elif req_type == "quote":
+            return QuoteAgent().run(
+                int(request["customer_id"]),
+                int(request["item_id"]),
+                int(request["quantity"])
+            )
+        elif req_type == "sale":
+            order_str = request.get("order")
+            try:
+                order = ast.literal_eval(order_str) if isinstance(order_str, str) else order_str
+            except Exception:
+                return {"error": "Invalid order format"}
+            return SalesAgent().run(order)
+        elif req_type == "finance":
+            return FinanceAgent().run()
+        else:
+            return {"error": "Unknown request type"}
