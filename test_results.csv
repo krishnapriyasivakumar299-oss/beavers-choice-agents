@@ -1,20 +1,15 @@
-Request,Outcome,Reason,Cash Balance Change
-"{'request_id': '1', 'type': 'quote', 'customer_id': '101', 'item_id': '5', 'quantity': '200', 'price': '10', 'order': ''}",1800.0,Bulk discount applied,N/A
-"{'request_id': '2', 'type': 'quote', 'customer_id': '102', 'item_id': '6', 'quantity': '500', 'price': '10', 'order': ''}",4500.0,Bulk discount applied,N/A
-"{'request_id': '3', 'type': 'quote', 'customer_id': '103', 'item_id': '7', 'quantity': '10000', 'price': '10', 'order': ''}",90000.0,Bulk discount applied,N/A
-"{'request_id': '4', 'type': 'inventory', 'customer_id': '', 'item_id': '2', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
-"{'request_id': '5', 'type': 'inventory', 'customer_id': '', 'item_id': '4', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
-"{'request_id': '6', 'type': 'inventory', 'customer_id': '', 'item_id': '6', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
-"{'request_id': '7', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':101"", None: [""'item_id':5"", ""'quantity':200"", ""'price':2000}""]}",N/A,Invalid order format,N/A
-"{'request_id': '8', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':102"", None: [""'item_id':6"", ""'quantity':500"", ""'price':5000}""]}",N/A,Invalid order format,N/A
-"{'request_id': '9', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':103"", None: [""'item_id':7"", ""'quantity':10000"", ""'price':100000}""]}",N/A,Invalid order format,N/A
-"{'request_id': '10', 'type': 'finance', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ''}",10000.0,Demo financial report,0
-"{'request_id': '11', 'type': 'finance', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ''}",10000.0,Demo financial report,0
-"{'request_id': '12', 'type': 'finance', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ''}",10000.0,Demo financial report,0
-"{'request_id': '13', 'type': 'quote', 'customer_id': '104', 'item_id': '8', 'quantity': '500', 'price': '10', 'order': ''}",4500.0,Bulk discount applied,N/A
-"{'request_id': '14', 'type': 'quote', 'customer_id': '105', 'item_id': '9', 'quantity': '150', 'price': '10', 'order': ''}",1350.0,Bulk discount applied,N/A
-"{'request_id': '15', 'type': 'inventory', 'customer_id': '', 'item_id': '10', 'quantity': '', 'price': '', 'order': ' '}",ok,N/A,N/A
-"{'request_id': '16', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':104"", None: [""'item_id':8"", ""'quantity':500"", ""'price':5000}""]}",N/A,Invalid order format,N/A
-"{'request_id': '17', 'type': 'sale', 'customer_id': '', 'item_id': '', 'quantity': '', 'price': '', 'order': ""{'customer_id':105"", None: [""'item_id':9"", ""'quantity':150"", ""'price':1500}""]}",N/A,Invalid order format,N/A
-"{'request_id': '18', 'type': 'quote', 'customer_id': '106', 'item_id': '11', 'quantity': '120', 'price': '10', 'order': ''}",1080.0,Bulk discount applied,N/A
-"{'request_id': '19', 'type': 'inventory', 'customer_id': '', 'item_id': '12', 'quantity': '', 'price': '', 'order': ' '}",Error,get_supplier_delivery_date() missing 1 required positional argument: 'quantity',N/A
+request_id,request_date,response
+1,2024-01-01,"{'quote': 1800.0, 'reason': 'Bulk discount'}"
+2,2024-01-02,"{'quote': 4500.0, 'reason': 'Bulk discount'}"
+3,2024-01-03,"{'quote': 90000.0, 'reason': 'Bulk discount'}"
+4,2024-01-04,"{'status': 'low', 'stock': 0, 'eta': '2024-12-31'}"
+5,2024-01-05,"{'status': 'low', 'stock': 0, 'eta': '2024-12-31'}"
+6,2024-01-06,"{'status': 'low', 'stock': 0, 'eta': '2024-12-31'}"
+7,2024-01-07,{'message': 'Finance summary placeholder'}
+8,2024-01-08,{'message': 'Finance summary placeholder'}
+9,2024-01-09,{'message': 'Finance summary placeholder'}
+10,2024-01-10,"{'quote': 4500.0, 'reason': 'Bulk discount'}"
+11,2024-01-11,"{'quote': 1350.0, 'reason': 'Bulk discount'}"
+12,2024-01-12,"{'status': 'low', 'stock': 0, 'eta': '2024-12-31'}"
+13,2024-01-13,"{'quote': 1080.0, 'reason': 'Bulk discount'}"
+14,2024-01-14,"{'status': 'low', 'stock': 0, 'eta': '2024-12-31'}"

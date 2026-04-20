@@ -168,14 +168,30 @@ def init_database(db_engine: Engine, seed: int = 137) -> Engine:
         # ----------------------------
         # 2. Load and initialize 'quote_requests' table
         # ----------------------------
-        quote_requests_df = pd.read_csv("quote_requests.csv")
+        quote_requests_df = pd.read_csv(
+            "quote_requests_sample.csv",
+            engine="python",
+            on_bad_lines="skip"
+            )
         quote_requests_df["id"] = range(1, len(quote_requests_df) + 1)
         quote_requests_df.to_sql("quote_requests", db_engine, if_exists="replace", index=False)
 
         # ----------------------------
         # 3. Load and transform 'quotes' table
         # ----------------------------
-        quotes_df = pd.read_csv("quotes.csv")
+        
+        # quotes.csv is missing → use empty DataFrame instead
+        quotes_df = pd.DataFrame(columns=[
+        'total_amount',
+        'quote_explanation',
+        'job_type',
+        'order_size',
+        'event_type'
+        ])
+
+        print("⚠️ quotes.csv not found — using empty quotes table")
+        print("⚠️ quotes.csv not found — using empty quotes table")
+
         quotes_df["request_id"] = range(1, len(quotes_df) + 1)
         quotes_df["order_date"] = initial_date
 
